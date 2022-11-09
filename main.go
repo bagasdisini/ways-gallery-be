@@ -36,7 +36,7 @@ func main() {
 
 	var AllowedHeaders = handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	var AllowedMethods = handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS", "PATCH", "DELETE"})
-	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
+	var AllowedOrigins = handlers.AllowedOrigins([]string{"http://localhost:3000"})
 
 	fmt.Println("Running in localhost:5000")
 	http.ListenAndServe(":"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
