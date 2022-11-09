@@ -78,24 +78,35 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	dataUpload := r.Context().Value("dataFile")
+	dataImage := r.Context().Value("dataImage")
+	dataBestArt := r.Context().Value("dataBestArt")
 	filepath := ""
+	filepath1 := ""
 
 	var ctx = context.Background()
 	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
 	var API_KEY = os.Getenv("API_KEY")
 	var API_SECRET = os.Getenv("API_SECRET")
 
-	if dataUpload != nil {
-		filepath = dataUpload.(string)
+	if dataImage != nil {
+		filepath = dataImage.(string)
+	}
+
+	if dataBestArt != nil {
+		filepath1 = dataBestArt.(string)
 	}
 
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "dumbmerch"})
+	resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
+	resp1, err3 := cld.Upload.Upload(ctx, filepath1, uploader.UploadParams{Folder: "waysgallery"})
 
 	if err2 != nil {
 		fmt.Println(err2.Error())
+	}
+
+	if err3 != nil {
+		fmt.Println(err3.Error())
 	}
 
 	request := usersdto.UpdateUserRequest{
@@ -106,7 +117,8 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	user := models.User{
-		Image: resp.SecureURL,
+		Image:   resp.SecureURL,
+		BestArt: resp1.SecureURL,
 	}
 
 	user.ID = id
@@ -121,6 +133,10 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	if filepath != "" {
 		user.Image = filepath
+	}
+
+	if filepath1 != "" {
+		user.BestArt = filepath1
 	}
 
 	data, err := h.UserRepository.UpdateUser(user, id)

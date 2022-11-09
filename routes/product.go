@@ -15,5 +15,5 @@ func PostRoutes(r *mux.Router) {
 
 	r.HandleFunc("/posts", middleware.Auth(h.ShowPosts)).Methods("GET")
 	r.HandleFunc("/post/{id}", middleware.Auth(h.GetPostByID)).Methods("GET")
-	r.HandleFunc("/post", middleware.Auth(middleware.UploadFile(h.CreatePost))).Methods("POST")
+	r.HandleFunc("/post", middleware.Auth(middleware.UploadImage(h.CreatePost))).Methods("POST")
 }
