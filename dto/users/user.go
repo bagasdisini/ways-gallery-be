@@ -10,7 +10,7 @@ type UpdateUserRequest struct {
 	Name     string `json:"name"`
 	Image    string `json:"image"`
 	Greeting string `json:"greeting"`
-	BestArt  string `json:"bestart"`
+	BestArt  string `json:"bestArt"`
 }
 
 type UserResponse struct {
@@ -20,6 +20,6 @@ type UserResponse struct {
 	Password  string `json:"password"`
 	Image     string `json:"image" `
 	Greeting  string `json:"greeting"`
-	BestArt   string `json:"bestart" `
+	BestArt   string `json:"bestArt" `
 	Following string `json:"following"`
 }
