@@ -159,7 +159,7 @@ func (h *handlerPost) CreatePost(w http.ResponseWriter, r *http.Request) {
 		Title:  request.Title,
 		Desc:   request.Desc,
 		Date:   request.Date,
-		Image1: "http://localhost:5000/" + filepath,
+		Image1: filepath,
 		Image2: filepath2,
 		Image3: filepath3,
 		Image4: filepath4,
