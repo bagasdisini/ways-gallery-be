@@ -11,9 +11,9 @@ type Transaction struct {
 	Price       string `json:"price" form:"price" gorm:"type: varchar(255)"`
 	Status      string `json:"status" form:"status" gorm:"type: varchar(255)"`
 	ProjectDesc string `json:"projectDesc" form:"projectDesc" gorm:"type: varchar(255)"`
-	Project1    string `json:"project1" form:"project1" gorm:"type: varchar(255)"`
-	Project2    string `json:"project2" form:"project2" gorm:"type: varchar(255)"`
-	Project3    string `json:"project3" form:"project3" gorm:"type: varchar(255)"`
-	Project4    string `json:"project4" form:"project4" gorm:"type: varchar(255)"`
-	Project5    string `json:"project5" form:"project5" gorm:"type: varchar(255)"`
+	Image1      string `json:"image1" form:"image1" gorm:"type: varchar(255)"`
+	Image2      string `json:"image2" form:"image2" gorm:"type: varchar(255)"`
+	Image3      string `json:"image3" form:"image3" gorm:"type: varchar(255)"`
+	Image4      string `json:"image4" form:"image4" gorm:"type: varchar(255)"`
+	Image5      string `json:"image5" form:"image5" gorm:"type: varchar(255)"`
 }

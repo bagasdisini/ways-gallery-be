@@ -5,11 +5,11 @@ type CreatePostRequest struct {
 	Title  string `json:"title"`
 	Desc   string `json:"desc"`
 	Date   string `json:"date"`
-	Post1  string `json:"post1"`
-	Post2  string `json:"post2"`
-	Post3  string `json:"post3"`
-	Post4  string `json:"post4"`
-	Post5  string `json:"post5"`
+	Image1 string `json:"image1"`
+	Image2 string `json:"image2"`
+	Image3 string `json:"image3"`
+	Image4 string `json:"image4"`
+	Image5 string `json:"image5"`
 }
 
 type PostResponse struct {
@@ -18,9 +18,9 @@ type PostResponse struct {
 	Desc   string `json:"desc"`
 	Date   string `json:"date"`
 	UserID int    `json:"userID"`
-	Post1  string `json:"post1" `
-	Post2  string `json:"post2" `
-	Post3  string `json:"post3" `
-	Post4  string `json:"post4" `
-	Post5  string `json:"post5" `
+	Image1 string `json:"image1"`
+	Image2 string `json:"image2"`
+	Image3 string `json:"image3"`
+	Image4 string `json:"image4"`
+	Image5 string `json:"image5"`
 }

@@ -35,28 +35,28 @@ func (h *handlerTransaction) ShowTransaction(w http.ResponseWriter, r *http.Requ
 	}
 
 	for i, p := range transaction {
-		imagePath := os.Getenv("PATH_FILE") + p.Project1
-		transaction[i].Project1 = imagePath
+		imagePath := os.Getenv("PATH_FILE") + p.Image1
+		transaction[i].Image1 = imagePath
 	}
 
 	for i, p := range transaction {
-		imagePath := os.Getenv("PATH_FILE") + p.Project2
-		transaction[i].Project2 = imagePath
+		imagePath := os.Getenv("PATH_FILE") + p.Image2
+		transaction[i].Image2 = imagePath
 	}
 
 	for i, p := range transaction {
-		imagePath := os.Getenv("PATH_FILE") + p.Project3
-		transaction[i].Project3 = imagePath
+		imagePath := os.Getenv("PATH_FILE") + p.Image3
+		transaction[i].Image3 = imagePath
 	}
 
 	for i, p := range transaction {
-		imagePath := os.Getenv("PATH_FILE") + p.Project4
-		transaction[i].Project4 = imagePath
+		imagePath := os.Getenv("PATH_FILE") + p.Image4
+		transaction[i].Image4 = imagePath
 	}
 
 	for i, p := range transaction {
-		imagePath := os.Getenv("PATH_FILE") + p.Project5
-		transaction[i].Project5 = imagePath
+		imagePath := os.Getenv("PATH_FILE") + p.Image5
+		transaction[i].Image5 = imagePath
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -78,11 +78,11 @@ func (h *handlerTransaction) GetTransactionByID(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	transaction.Project1 = os.Getenv("PATH_FILE") + transaction.Project1
-	transaction.Project2 = os.Getenv("PATH_FILE") + transaction.Project2
-	transaction.Project3 = os.Getenv("PATH_FILE") + transaction.Project3
-	transaction.Project4 = os.Getenv("PATH_FILE") + transaction.Project4
-	transaction.Project5 = os.Getenv("PATH_FILE") + transaction.Project5
+	transaction.Image1 = os.Getenv("PATH_FILE") + transaction.Image1
+	transaction.Image2 = os.Getenv("PATH_FILE") + transaction.Image2
+	transaction.Image3 = os.Getenv("PATH_FILE") + transaction.Image3
+	transaction.Image4 = os.Getenv("PATH_FILE") + transaction.Image4
+	transaction.Image5 = os.Getenv("PATH_FILE") + transaction.Image5
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Status: http.StatusOK, Data: transaction}
@@ -161,24 +161,24 @@ func (h *handlerTransaction) UpdateTransaction(w http.ResponseWriter, r *http.Re
 		transaction.ProjectDesc = request.ProjectDesc
 	}
 
-	if request.Project1 != "" {
-		transaction.Project1 = request.Project1
+	if request.Image1 != "" {
+		transaction.Image1 = request.Image1
 	}
 
-	if request.Project2 != "" {
-		transaction.Project2 = request.Project2
+	if request.Image2 != "" {
+		transaction.Image2 = request.Image2
 	}
 
-	if request.Project3 != "" {
-		transaction.Project3 = request.Project3
+	if request.Image3 != "" {
+		transaction.Image3 = request.Image3
 	}
 
-	if request.Project4 != "" {
-		transaction.Project4 = request.Project4
+	if request.Image4 != "" {
+		transaction.Image4 = request.Image4
 	}
 
-	if request.Project5 != "" {
-		transaction.Project5 = request.Project5
+	if request.Image5 != "" {
+		transaction.Image5 = request.Image5
 	}
 
 	data, err := h.TransactionRepository.UpdateTransaction(transaction, id)

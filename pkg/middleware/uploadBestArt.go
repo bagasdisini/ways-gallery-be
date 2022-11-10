@@ -11,7 +11,7 @@ import (
 func UploadBestArt(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		file, _, err := r.FormFile("image")
+		file, _, err := r.FormFile("bestArt")
 
 		if file == nil {
 			next.ServeHTTP(w, r)
@@ -51,8 +51,9 @@ func UploadBestArt(next http.HandlerFunc) http.HandlerFunc {
 		tempFile.Write(fileBytes)
 
 		data := tempFile.Name()
+		filename := data[8:]
 
-		ctx := context.WithValue(r.Context(), "dataBestArt", data)
+		ctx := context.WithValue(r.Context(), "dataBestArt", filename)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

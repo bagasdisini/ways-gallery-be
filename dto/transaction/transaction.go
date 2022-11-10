@@ -13,11 +13,11 @@ type CreateTransactionRequest struct {
 type UpdateTransactionRequest struct {
 	Status      string `json:"status"`
 	ProjectDesc string `json:"projectDesc"`
-	Project1    string `json:"project1"`
-	Project2    string `json:"project2"`
-	Project3    string `json:"project3"`
-	Project4    string `json:"project4"`
-	Project5    string `json:"project5"`
+	Image1      string `json:"image1"`
+	Image2      string `json:"image2"`
+	Image3      string `json:"image3"`
+	Image4      string `json:"image4"`
+	Image5      string `json:"image5"`
 }
 
 type TransactionResponse struct {
@@ -31,9 +31,9 @@ type TransactionResponse struct {
 	Price       string `json:"price"`
 	Status      string `json:"status"`
 	ProjectDesc string `json:"projectDesc"`
-	Project1    string `json:"project1"`
-	Project2    string `json:"project2"`
-	Project3    string `json:"project3"`
-	Project4    string `json:"project4"`
-	Project5    string `json:"project5"`
+	Image1      string `json:"image1"`
+	Image2      string `json:"image2"`
+	Image3      string `json:"image3"`
+	Image4      string `json:"image4"`
+	Image5      string `json:"image5"`
 }

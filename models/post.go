@@ -6,9 +6,10 @@ type Post struct {
 	Desc   string `json:"desc" form:"desc" gorm:"type: varchar(255)"`
 	Date   string `json:"date" form:"date" gorm:"type: varchar(255)"`
 	UserID int    `json:"userID"`
-	Post1  string `json:"post1" form:"post1" gorm:"type: varchar(255)"`
-	Post2  string `json:"post2" form:"post2" gorm:"type: varchar(255)"`
-	Post3  string `json:"post3" form:"post3" gorm:"type: varchar(255)"`
-	Post4  string `json:"post4" form:"post4" gorm:"type: varchar(255)"`
-	Post5  string `json:"post5" form:"post5" gorm:"type: varchar(255)"`
+	User   User   `json:"userId" gorm:"foreignKey:UserID"`
+	Image1 string `json:"image1" form:"image1" gorm:"type: varchar(255)"`
+	Image2 string `json:"image2" form:"image2" gorm:"type: varchar(255)"`
+	Image3 string `json:"image3" form:"image3" gorm:"type: varchar(255)"`
+	Image4 string `json:"image4" form:"image4" gorm:"type: varchar(255)"`
+	Image5 string `json:"image5" form:"image5" gorm:"type: varchar(255)"`
 }
