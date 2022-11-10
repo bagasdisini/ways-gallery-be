@@ -52,7 +52,7 @@ func UploadImage(next http.HandlerFunc) http.HandlerFunc {
 
 		data := tempFile.Name()
 
-		ctx := context.WithValue(r.Context(), "dataImage", data)
+		ctx := context.WithValue(r.Context(), "dataFile", data)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

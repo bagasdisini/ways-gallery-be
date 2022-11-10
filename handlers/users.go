@@ -38,11 +38,6 @@ func (h *handler) ShowUsers(w http.ResponseWriter, r *http.Request) {
 		users[i].Image = imagePath
 	}
 
-	for i, p := range users {
-		imagePath := os.Getenv("PATH_FILE") + p.BestArt
-		users[i].BestArt = imagePath
-	}
-
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Status: http.StatusOK, Data: users}
 	json.NewEncoder(w).Encode(response)
@@ -68,7 +63,6 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user.Image = os.Getenv("PATH_FILE") + user.Image
-	user.BestArt = os.Getenv("PATH_FILE") + user.BestArt
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Status: http.StatusOK, Data: user}
@@ -79,9 +73,7 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	dataImage := r.Context().Value("dataImage")
-	dataBestArt := r.Context().Value("dataBestArt")
 	filepath := ""
-	filepath1 := ""
 
 	var ctx = context.Background()
 	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
@@ -92,21 +84,12 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		filepath = dataImage.(string)
 	}
 
-	if dataBestArt != nil {
-		filepath1 = dataBestArt.(string)
-	}
-
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
 	resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
-	resp1, err3 := cld.Upload.Upload(ctx, filepath1, uploader.UploadParams{Folder: "waysgallery"})
 
 	if err2 != nil {
 		fmt.Println(err2.Error())
-	}
-
-	if err3 != nil {
-		fmt.Println(err3.Error())
 	}
 
 	request := usersdto.UpdateUserRequest{
@@ -117,8 +100,7 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	user := models.User{
-		Image:   resp.SecureURL,
-		BestArt: resp1.SecureURL,
+		Image: resp.SecureURL,
 	}
 
 	user.ID = id
@@ -133,10 +115,6 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	if filepath != "" {
 		user.Image = filepath
-	}
-
-	if filepath1 != "" {
-		user.BestArt = filepath1
 	}
 
 	data, err := h.UserRepository.UpdateUser(user, id)
