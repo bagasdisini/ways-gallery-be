@@ -98,8 +98,9 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	request := usersdto.UpdateUserRequest{
-		Name:     r.FormValue("name"),
-		Greeting: r.FormValue("greeting"),
+		Name:      r.FormValue("name"),
+		Greeting:  r.FormValue("greeting"),
+		Following: r.FormValue("following"),
 	}
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
@@ -114,6 +115,10 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	if request.Greeting != "" {
 		user.Greeting = request.Greeting
+	}
+
+	if request.Following != "" {
+		user.Following = request.Following
 	}
 
 	if filepath != "" {

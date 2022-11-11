@@ -8,6 +8,7 @@ type CreateTransactionRequest struct {
 	StartDate string `json:"startDate"`
 	EndDate   string `json:"endDate"`
 	Price     string `json:"price"`
+	Status    string `json:"status"`
 }
 
 type UpdateTransactionRequest struct {

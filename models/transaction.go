@@ -3,7 +3,9 @@ package models
 type Transaction struct {
 	ID          int    `json:"id" gorm:"primary_key:auto_increment"`
 	AdminID     int    `json:"admin_id"`
+	Admin       User   `json:"admin" gorm:"foreignKey:AdminID"`
 	BuyerID     int    `json:"buyer_id"`
+	Buyer       User   `json:"buyer" gorm:"foreignKey:BuyerID"`
 	Title       string `json:"title" form:"title" gorm:"type: varchar(255)"`
 	Desc        string `json:"desc" form:"desc" gorm:"type: varchar(255)"`
 	StartDate   string `json:"startDate" form:"startDate" gorm:"type: varchar(255)"`

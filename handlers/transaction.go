@@ -94,8 +94,19 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 
 	adminInfo := r.Context().Value("authInfo").(jwt.MapClaims)
 	buyerId := int(adminInfo["id"].(float64))
+	p := r.FormValue("admin_id")
+	adminP, _ := strconv.Atoi(p)
 
-	request := new(transactiondto.CreateTransactionRequest)
+	request := transactiondto.CreateTransactionRequest{
+		AdminID:   adminP,
+		Desc:      r.FormValue("desc"),
+		Title:     r.FormValue("title"),
+		StartDate: r.FormValue("startDate"),
+		EndDate:   r.FormValue("endDate"),
+		Price:     r.FormValue("price"),
+		Status:    "pending",
+	}
+
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response := dto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()}
@@ -111,7 +122,7 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		StartDate: request.StartDate,
 		EndDate:   request.EndDate,
 		Price:     request.Price,
-		Status:    "waiting",
+		Status:    request.Status,
 	}
 
 	validation := validator.New()
