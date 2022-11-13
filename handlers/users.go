@@ -5,10 +5,15 @@ import (
 	usersdto "backend/dto/users"
 	"backend/models"
 	"backend/repositories"
+	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gorilla/mux"
 )
 
@@ -29,11 +34,11 @@ func (h *handler) ShowUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for i, p := range users {
-		users[i].Image = "http://localhost:5000/uploads/" + p.Image
+		users[i].Image = os.Getenv("PATH_FILE") + p.Image
 	}
 
 	for i, p := range users {
-		users[i].BestArt = "http://localhost:5000/uploads/" + p.BestArt
+		users[i].BestArt = os.Getenv("PATH_FILE") + p.BestArt
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -60,8 +65,8 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user.Image = "http://localhost:5000/uploads/" + user.Image
-	user.BestArt = "http://localhost:5000/uploads/" + user.BestArt
+	user.Image = os.Getenv("PATH_FILE") + user.Image
+	user.BestArt = os.Getenv("PATH_FILE") + user.BestArt
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Status: http.StatusOK, Data: user}
@@ -76,10 +81,10 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	filepath := ""
 	fileArt := ""
 
-	// var ctx = context.Background()
-	// var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	// var API_KEY = os.Getenv("API_KEY")
-	// var API_SECRET = os.Getenv("API_SECRET")
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
 
 	if dataImage != nil {
 		filepath = dataImage.(string)
@@ -89,13 +94,14 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		fileArt = dataBestArt.(string)
 	}
 
-	// cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	// resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
+	resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
+	resp2, _ := cld.Upload.Upload(ctx, fileArt, uploader.UploadParams{Folder: "waysgallery"})
 
-	// if err2 != nil {
-	// 	fmt.Println(err2.Error())
-	// }
+	if err2 != nil {
+		fmt.Println(err2.Error())
+	}
 
 	request := usersdto.UpdateUserRequest{
 		Name:      r.FormValue("name"),
@@ -122,11 +128,11 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if filepath != "" {
-		user.Image = filepath
+		user.Image = resp.SecureURL
 	}
 
 	if fileArt != "" {
-		user.BestArt = fileArt
+		user.BestArt = resp2.SecureURL
 	}
 
 	data, err := h.UserRepository.UpdateUser(user, id)
