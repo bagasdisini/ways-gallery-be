@@ -121,8 +121,8 @@ func (h *handlerAuth) Login(w http.ResponseWriter, r *http.Request) {
 		Password:  user.Password,
 		Token:     token,
 		Greeting:  user.Greeting,
-		BestArt:   "http://localhost:5000/uploads/" + user.BestArt,
-		Image:     "http://localhost:5000/uploads/" + user.Image,
+		BestArt:   user.BestArt,
+		Image:     user.Image,
 		Following: user.Following,
 	}
 
@@ -151,8 +151,8 @@ func (h *handlerAuth) CheckAuth(w http.ResponseWriter, r *http.Request) {
 		Email:     user.Email,
 		Password:  user.Password,
 		Greeting:  user.Greeting,
-		BestArt:   "http://localhost:5000/uploads/" + user.BestArt,
-		Image:     "http://localhost:5000/uploads/" + user.Image,
+		BestArt:   user.BestArt,
+		Image:     user.Image,
 		Following: user.Following,
 	}
 

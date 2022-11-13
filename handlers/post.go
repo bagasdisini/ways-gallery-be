@@ -5,12 +5,16 @@ import (
 	dto "backend/dto/result"
 	"backend/models"
 	"backend/repositories"
+	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
 
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/mux"
@@ -106,10 +110,10 @@ func (h *handlerPost) CreatePost(w http.ResponseWriter, r *http.Request) {
 	filepath4 := ""
 	filepath5 := ""
 
-	// var ctx = context.Background()
-	// var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	// var API_KEY = os.Getenv("API_KEY")
-	// var API_SECRET = os.Getenv("API_SECRET")
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
 
 	if dataUpload != nil {
 		filepath = dataUpload.(string)
@@ -127,13 +131,17 @@ func (h *handlerPost) CreatePost(w http.ResponseWriter, r *http.Request) {
 		filepath5 = dataUpload5.(string)
 	}
 
-	// cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	// resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
+	resp, err2 := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "waysgallery"})
+	resp2, _ := cld.Upload.Upload(ctx, filepath2, uploader.UploadParams{Folder: "waysgallery"})
+	resp3, _ := cld.Upload.Upload(ctx, filepath3, uploader.UploadParams{Folder: "waysgallery"})
+	resp4, _ := cld.Upload.Upload(ctx, filepath4, uploader.UploadParams{Folder: "waysgallery"})
+	resp5, _ := cld.Upload.Upload(ctx, filepath5, uploader.UploadParams{Folder: "waysgallery"})
 
-	// if err2 != nil {
-	// 	fmt.Println(err2.Error())
-	// }
+	if err2 != nil {
+		fmt.Println(err2.Error())
+	}
 
 	input := time.Now()
 
@@ -159,11 +167,11 @@ func (h *handlerPost) CreatePost(w http.ResponseWriter, r *http.Request) {
 		Title:  request.Title,
 		Desc:   request.Desc,
 		Date:   request.Date,
-		Image1: filepath,
-		Image2: filepath2,
-		Image3: filepath3,
-		Image4: filepath4,
-		Image5: filepath5,
+		Image1: resp.SecureURL,
+		Image2: resp2.SecureURL,
+		Image3: resp3.SecureURL,
+		Image4: resp4.SecureURL,
+		Image5: resp5.SecureURL,
 	}
 
 	post, err = h.PostRepository.CreatePost(post)
