@@ -36,7 +36,7 @@ func main() {
 
 	var AllowedHeaders = handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods", "Origin", "Accept"})
 	var AllowedMethods = handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS", "PATCH", "DELETE"})
-	var AllowedOrigins = handlers.AllowedOrigins([]string{"https://waysgallerysite.netlify.app"})
+	var AllowedOrigins = handlers.AllowedOrigins([]string{"https://w-gallery.netlify.app/"})
 
 	fmt.Println("Running in localhost:5000")
 	// http.ListenAndServe("localhost:5000", r)
